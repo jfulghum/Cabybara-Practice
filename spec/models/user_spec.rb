@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  let!(:user) { FactoryGirl.create(:user) }
+
   # validations
   it { should validate_presence_of(:session_token) }
   it { should validate_presence_of(:password_digest) }
@@ -15,8 +17,9 @@ RSpec.describe User, type: :model do
 
   # class methods
   describe '::find_by_credentials' do
+
     it 'should return a user if the username and password are valid' do
-      expect(User.find_by_credentials('sicko', 'imkindofsick')).to eq(:user)
+      expect(User.find_by_credentials('sicko', 'password')).to eq(user)
     end
 
     it 'should return nil otherwise' do
